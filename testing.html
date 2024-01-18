@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Money Transfer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(29, 80, 97); 
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .website {
+            background-color: #bbb7b7;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="website" id="first-website">
+            <h1>Sender</h1>
+            <p>Balance: ₱<span id="budget1">500000</span></p>
+            <button onclick="sendMoney()">Send ₱105</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function sendMoney() {
+            var budget1 = parseInt(localStorage.getItem('senderBalance')) || 500000;
+
+            if (budget1 >= 105) {
+                budget1 -= 105;
+                localStorage.setItem('senderBalance', budget1);
+                document.querySelector('#budget1').textContent = budget1;
+                alert("Money sent successfully!");
+                openNewWindow(); 
+            } else {
+                alert("Insufficient balance.");
+            }
+        }
+
+        function openNewWindow() {
+            var newWindow = window.open('receipt.html', '_blank'); 
+            if (newWindow) {
+                newWindow.focus(); 
+            } else {
+                alert('Popup blocked! Please allow popups for this website.'); 
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var budget1 = parseInt(localStorage.getItem('senderBalance')) || 500000;
+            document.querySelector('#budget1').textContent = budget1;
+        });
+    </script>
+</body>
+</html>
